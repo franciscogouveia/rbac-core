@@ -1,0 +1,39 @@
+{
+  "name": "rbac-core",
+  "version": "0.0.1",
+  "description": "RBAC core from hapi-rbac",
+  "main": "lib/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "lab -v"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/franciscogouveia/rbac-core.git"
+  },
+  "keywords": [
+    "rbac"
+  ],
+  "author": {
+    "name": "Francisco de Gouveia",
+    "email": "francisco@de-gouveia.eu",
+    "url": "http://de-gouveia.eu"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/franciscogouveia/rbac-core/issues"
+  },
+  "homepage": "https://github.com/franciscogouveia/rbac-core#readme",
+  "dependencies": {
+    "async": "^1.5.2",
+    "boom": "^3.1.2",
+    "hoek": "^3.0.4",
+    "joi": "^7.3.0"
+  },
+  "devDependencies": {
+    "code": "^2.1.0",
+    "lab": "^8.2.0"
+  }
+}

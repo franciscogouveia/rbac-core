@@ -2,7 +2,7 @@
 
 const Code = require('code');
 const Lab = require('lab');
-const DataRetrievalRouter = require('../lib/DataRetrievalRouter');
+const DataRetrievalRouter = require('../').DataRetrievalRouter;
 
 const lab = exports.lab = Lab.script();
 const experiment = lab.experiment;

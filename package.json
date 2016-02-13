@@ -7,7 +7,10 @@
     "test": "test"
   },
   "scripts": {
-    "test": "lab -v"
+    "test": "lab -v",
+    "coverage": "lab -s -r lcov | coveralls",
+    "lint": "lab -dL",
+    "indent": "js-beautify lib/index.js"
   },
   "repository": {
     "type": "git",
@@ -34,6 +37,8 @@
   },
   "devDependencies": {
     "code": "^2.1.0",
-    "lab": "^8.2.0"
+    "lab": "^8.2.0",
+    "coveralls": "^2.11.6",
+    "js-beautify": "^1.5.10"
   }
 }

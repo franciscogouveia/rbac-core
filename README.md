@@ -22,7 +22,7 @@ Even though this plugin doesn't implement the XACML specification, it was based 
 [npm-url]: https://npmjs.com/package/rbac-core
 [travis-badge]: https://travis-ci.org/franciscogouveia/rbac-core.svg?branch=master
 [travis-url]: https://travis-ci.org/franciscogouveia/rbac-core
-[coveralls-badge]:https://coveralls.io/repos/franciscogouveia/rbac-core/badge.svg?branch=master&service=github
+[coveralls-badge]:https://coveralls.io/repos/github/franciscogouveia/rbac-core/badge.svg?branch=master
 [coveralls-url]: https://coveralls.io/github/franciscogouveia/rbac-core?branch=master
 [david-badge]: https://david-dm.org/franciscogouveia/rbac-core.svg
 [david-url]: https://david-dm.org/franciscogouveia/rbac-core

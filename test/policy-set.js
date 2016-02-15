@@ -227,4 +227,25 @@ experiment('Policy set unit tests', () => {
             done();
         });
     });
+
+    test('should have error on invalid combinatory algorithm', (done) => {
+
+        const policySet = {
+            target: [{ 'credentials:group': 'writer' }, { 'credentials:group': 'publisher' }], // writer OR publisher
+            apply: 'some-strange-value',
+            rules: [
+                {
+                    effect: 'deny'
+                }
+            ]
+        };
+
+        Rbac.evaluatePolicy(policySet, dataRetriever, (err, applies) => {
+
+            expect(err).to.exist();
+
+            done();
+        });
+    });
+
 });

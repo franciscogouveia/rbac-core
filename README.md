@@ -18,7 +18,7 @@ See [Release Notes](https://github.com/franciscogouveia/rbac-core/issues/12).
 First, install
 
 ```
-npm install --save hapi-rbac
+npm install --save rbac-core
 ```
 
 Import it to your project

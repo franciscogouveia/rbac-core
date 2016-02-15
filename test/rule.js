@@ -171,3 +171,57 @@ experiment('Rule unit tests (deny)', () => {
     });
 
 });
+
+experiment('Rule unit tests', () => {
+
+    const rule = {
+        target: [
+            { 'credentials:group': 'blacklist' }, // Blacklisted OR
+            { 'credentials:group': 'anonymous' }, // Anonymous OR
+            { 'credentials:verified': false } // Not verified
+        ],
+        effect: 'deny'
+    };
+
+    // Register mocked data retriever
+    const dataRetriever = new DataRetrievalRouter();
+
+    test('should have error on missing rule', (done) => {
+
+        Rbac.evaluateRule(null, dataRetriever, (err, result) => {
+
+            expect(err).to.exist();
+
+            done();
+        });
+    });
+
+    test('should have error on missing effect', (done) => {
+
+        const invalidRule = {
+            target: [{ 'credentials:group': ['administrator', 'publisher'] }] // administrator AND publisher -> never use the same key twice in an object or it will be overriden
+        };
+
+        Rbac.evaluateRule(invalidRule, dataRetriever, (err, result) => {
+
+            expect(err).to.exist();
+
+            done();
+        });
+    });
+
+    test('should have error on invalid effect', (done) => {
+
+        const invalidRule = {
+            target: [{ 'credentials:group': ['administrator', 'publisher'] }], // administrator AND publisher -> never use the same key twice in an object or it will be overriden
+            effect: 'some-strange-value'
+        };
+
+        Rbac.evaluateRule(invalidRule, dataRetriever, (err, result) => {
+
+            expect(err).to.exist();
+
+            done();
+        });
+    });
+});

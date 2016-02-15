@@ -150,3 +150,20 @@ experiment('Target unit tests (OR)', () => {
     });
 
 });
+
+experiment('Target unit tests', () => {
+
+    const dataRetriever = new DataRetrievalRouter();
+
+    test('should apply (partial match)', (done) => {
+
+        const invalidTarget = [];
+
+        Rbac.evaluateTarget(invalidTarget, dataRetriever, (err, applies) => {
+
+            expect(err).to.exist();
+
+            done();
+        });
+    });
+});

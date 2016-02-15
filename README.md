@@ -122,10 +122,10 @@ Rbac.evaluatePolicy(policy, dataRetrieverRouter, (err, result) => {
 If you want to extend your existent data retriever router, you can do it.
 
 ```js
-// You can add context, for context isolation
+// You can just extend
 const dataRetrieverRouter1 = dataRetrieverRouter.createChild();
 
-// You can add context, for context isolation
+// You can also directly add context to the extension, for isolation
 const dataRetrieverRouter2 = dataRetrieverRouter.createChild(context);
 ```
 

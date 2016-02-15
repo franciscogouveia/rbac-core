@@ -16,7 +16,7 @@ const DataRetrievalRouter = require('../lib/DataRetrievalRouter');
 experiment('Rule unit tests (permit)', () => {
 
     const rule = {
-        target: ['all-of', { type: 'group', value: 'administrator' }, { type: 'group', value: 'publisher' }],
+        target: [{ 'credentials:group': 'administrator', 'credentials:group': 'publisher' }], // administrator AND publisher
         effect: 'permit'
     };
 
@@ -83,10 +83,11 @@ experiment('Rule unit tests (permit)', () => {
 experiment('Rule unit tests (deny)', () => {
 
     const rule = {
-        target: ['any-of', { type: 'group', value: 'blacklist' }, { type: 'group', value: 'anonymous' }, {
-            type: 'verified',
-            value: false
-        }],
+        target: [
+            { 'credentials:group': 'blacklist' }, // Blacklisted OR
+            { 'credentials:group': 'anonymous' }, // Anonymous OR
+            { 'credentials:verified': false } // Not verified
+        ],
         effect: 'deny'
     };
 

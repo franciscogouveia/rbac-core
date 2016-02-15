@@ -23,8 +23,9 @@ experiment('Rule unit tests (permit)', () => {
     // Register mocked data retriever
     const dataRetriever = new DataRetrievalRouter();
     dataRetriever.register('credentials', (source, key, context) => {
+
         return context[key];
-    }, {override: true});
+    }, { override: true });
 
     test('should permit publisher administrator', (done) => {
 
@@ -92,8 +93,9 @@ experiment('Rule unit tests (deny)', () => {
     // Register mocked data retriever
     const dataRetriever = new DataRetrievalRouter();
     dataRetriever.register('credentials', (source, key, context) => {
+
         return context[key];
-    }, {override: true});
+    }, { override: true });
 
     test('should deny user in blacklist group', (done) => {
 

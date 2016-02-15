@@ -17,8 +17,9 @@ experiment('Policy set unit tests', () => {
 
     const dataRetriever = new DataRetrievalRouter();
     dataRetriever.register('credentials', (source, key, context) => {
+
         return context[key];
-    }, {override: true});
+    }, { override: true });
 
     const policySet = {
         target: ['any-of', { type: 'group', value: 'writer' }, { type: 'group', value: 'publisher' }], // writer OR publisher
@@ -191,4 +192,3 @@ experiment('Policy set unit tests', () => {
     });
 
 });
-    

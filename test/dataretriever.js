@@ -20,6 +20,7 @@ experiment('RBAC internal modular information retrieval', () => {
     test('should register a valid retriever', (done) => {
 
         const retriever = (source, key, context) => {
+
             return 'key-' + key;
         };
 
@@ -33,15 +34,17 @@ experiment('RBAC internal modular information retrieval', () => {
     test('should override a valid retriever (single handler)', (done) => {
 
         const retriever1 = (source, key, context) => {
+
             return key + '-1';
         };
 
         const retriever2 = (source, key, context) => {
+
             return key + '-2';
         };
 
         dataRetriever.register('test-override', retriever1);
-        dataRetriever.register('test-override', retriever2, {override: true});
+        dataRetriever.register('test-override', retriever2, { override: true });
 
         expect(dataRetriever.get('test-override:test', {})).to.equal('test-2');
 
@@ -51,10 +54,12 @@ experiment('RBAC internal modular information retrieval', () => {
     test('should not override a valid retriever (single handler)', (done) => {
 
         const retriever1 = (source, key, context) => {
+
             return key + '-1';
         };
 
         const retriever2 = (source, key, context) => {
+
             return key + '-2';
         };
 
@@ -68,20 +73,22 @@ experiment('RBAC internal modular information retrieval', () => {
     test('should override a valid retriever (multiple handlers)', (done) => {
 
         const retriever1 = (source, key, context) => {
+
             return key + '-1';
         };
 
         const retriever2 = (source, key, context) => {
+
             return key + '-2';
         };
 
         dataRetriever.register(['test-override-multiple-1', 'test-override-multiple-2', 'test-override-multiple-3'], retriever1);
-        dataRetriever.register(['test-override-multiple-2', 'test-override-multiple-4'], retriever2, {override: true}); // test-override-multiple-2 collides
+        dataRetriever.register(['test-override-multiple-2', 'test-override-multiple-4'], retriever2, { override: true }); // test-override-multiple-2 collides
 
-        expect(dataRetriever.get('test-override-multiple-1:test', {})).to.equal('test-1');
-        expect(dataRetriever.get('test-override-multiple-2:test', {})).to.equal('test-2');
-        expect(dataRetriever.get('test-override-multiple-3:test', {})).to.equal('test-1');
-        expect(dataRetriever.get('test-override-multiple-4:test', {})).to.equal('test-2');
+        expect(dataRetriever.get('test-override-multiple-1:test', { })).to.equal('test-1');
+        expect(dataRetriever.get('test-override-multiple-2:test', { })).to.equal('test-2');
+        expect(dataRetriever.get('test-override-multiple-3:test', { })).to.equal('test-1');
+        expect(dataRetriever.get('test-override-multiple-4:test', { })).to.equal('test-2');
 
         done();
     });
@@ -89,10 +96,12 @@ experiment('RBAC internal modular information retrieval', () => {
     test('should not override a valid retriever (multiple handlers)', (done) => {
 
         const retriever1 = (source, key, context) => {
+
             return key + '-1';
         };
 
         const retriever2 = (source, key, context) => {
+
             return key + '-2';
         };
 

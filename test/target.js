@@ -20,8 +20,9 @@ experiment('Target unit tests (all-of)', () => {
     // Register mocked data retriever
     const dataRetriever = new DataRetrievalRouter();
     dataRetriever.register('credentials', (source, key, context) => {
+
         return context[key];
-    }, {override: true});
+    }, { override: true });
 
     test('should apply (full match)', (done) => {
 
@@ -89,8 +90,9 @@ experiment('Target unit tests (any-of)', () => {
     // Register mocked data retriever
     const dataRetriever = new DataRetrievalRouter();
     dataRetriever.register('credentials', (source, key, context) => {
+
         return context[key];
-    }, {override: true});
+    }, { override: true });
 
     test('should apply (partial match)', (done) => {
 

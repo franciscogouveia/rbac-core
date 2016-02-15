@@ -16,7 +16,7 @@ const DataRetrievalRouter = require('../lib/DataRetrievalRouter');
 experiment('Rule unit tests (permit)', () => {
 
     const rule = {
-        target: [{ 'credentials:group': 'administrator', 'credentials:group': 'publisher' }], // administrator AND publisher
+        target: [{ 'credentials:group': ['administrator', 'publisher'] }], // administrator AND publisher -> never use the same key twice in an object or it will be overriden
         effect: 'permit'
     };
 

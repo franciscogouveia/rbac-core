@@ -174,15 +174,6 @@ experiment('Rule unit tests (deny)', () => {
 
 experiment('Rule unit tests', () => {
 
-    const rule = {
-        target: [
-            { 'credentials:group': 'blacklist' }, // Blacklisted OR
-            { 'credentials:group': 'anonymous' }, // Anonymous OR
-            { 'credentials:verified': false } // Not verified
-        ],
-        effect: 'deny'
-    };
-
     // Register mocked data retriever
     const dataRetriever = new DataRetrievalRouter();
 

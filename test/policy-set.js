@@ -230,7 +230,7 @@ experiment('Policy set unit tests', () => {
 
     test('should have error on invalid combinatory algorithm', (done) => {
 
-        const policySet = {
+        const invalidPolicySet = {
             target: [{ 'credentials:group': 'writer' }, { 'credentials:group': 'publisher' }], // writer OR publisher
             apply: 'some-strange-value',
             rules: [
@@ -240,7 +240,7 @@ experiment('Policy set unit tests', () => {
             ]
         };
 
-        Rbac.evaluatePolicy(policySet, dataRetriever, (err, applies) => {
+        Rbac.evaluatePolicy(invalidPolicySet, dataRetriever, (err, applies) => {
 
             expect(err).to.exist();
 

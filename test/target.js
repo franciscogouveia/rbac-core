@@ -85,7 +85,7 @@ experiment('Target unit tests (OR)', () => {
     const target = [
         { 'credentials:group': 'writer' },
         { 'credentials:premium': true },
-        { 'credentials:username': 'user00002'}
+        { 'credentials:username': 'user00002' }
     ];
 
     // Register mocked data retriever

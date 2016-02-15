@@ -191,4 +191,40 @@ experiment('Policy set unit tests', () => {
         });
     });
 
+    test('should have error on missing policy', (done) => {
+
+        const information = {
+            username: 'user00003',
+            group: ['publisher'],
+            premium: true,
+            blocked: false
+        };
+
+        Rbac.evaluatePolicy(null, dataRetriever.createChild(information), (err, applies) => {
+
+            expect(err).to.exist();
+
+            done();
+        });
+    });
+
+    test('should have error on missing data retriever', (done) => {
+
+        Rbac.evaluatePolicy(policySet, null, (err, applies) => {
+
+            expect(err).to.exist();
+
+            done();
+        });
+    });
+
+    test('should have error on invalid data retriever', (done) => {
+
+        Rbac.evaluatePolicy(policySet, 'test', (err, applies) => {
+
+            expect(err).to.exist();
+
+            done();
+        });
+    });
 });

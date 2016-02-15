@@ -7,7 +7,7 @@
 
 > The RBAC core from hapi-rbac
 
-> This is inspired by the [XACML](https://fr.wikipedia.org/wiki/XACML) policies.
+> This is inspired by the [XACML](https://en.wikipedia.org/wiki/XACML) policies.
 
 
 ## Learn more about _Rule Based Access Control_

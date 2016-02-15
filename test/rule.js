@@ -16,7 +16,7 @@ const DataRetrievalRouter = require('../lib/DataRetrievalRouter');
 experiment('Rule unit tests (permit)', () => {
 
     const rule = {
-        target: ['all-of', { type: 'group', value: 'administrator' }, { type: 'group', value: 'publisher' }],
+        target: [{ 'credentials:group': ['administrator', 'publisher'] }], // administrator AND publisher -> never use the same key twice in an object or it will be overriden
         effect: 'permit'
     };
 
@@ -83,10 +83,11 @@ experiment('Rule unit tests (permit)', () => {
 experiment('Rule unit tests (deny)', () => {
 
     const rule = {
-        target: ['any-of', { type: 'group', value: 'blacklist' }, { type: 'group', value: 'anonymous' }, {
-            type: 'verified',
-            value: false
-        }],
+        target: [
+            { 'credentials:group': 'blacklist' }, // Blacklisted OR
+            { 'credentials:group': 'anonymous' }, // Anonymous OR
+            { 'credentials:verified': false } // Not verified
+        ],
         effect: 'deny'
     };
 
@@ -169,4 +170,49 @@ experiment('Rule unit tests (deny)', () => {
         });
     });
 
+});
+
+experiment('Rule unit tests', () => {
+
+    // Register mocked data retriever
+    const dataRetriever = new DataRetrievalRouter();
+
+    test('should have error on missing rule', (done) => {
+
+        Rbac.evaluateRule(null, dataRetriever, (err, result) => {
+
+            expect(err).to.exist();
+
+            done();
+        });
+    });
+
+    test('should have error on missing effect', (done) => {
+
+        const invalidRule = {
+            target: [{ 'credentials:group': ['administrator', 'publisher'] }] // administrator AND publisher -> never use the same key twice in an object or it will be overriden
+        };
+
+        Rbac.evaluateRule(invalidRule, dataRetriever, (err, result) => {
+
+            expect(err).to.exist();
+
+            done();
+        });
+    });
+
+    test('should have error on invalid effect', (done) => {
+
+        const invalidRule = {
+            target: [{ 'credentials:group': ['administrator', 'publisher'] }], // administrator AND publisher -> never use the same key twice in an object or it will be overriden
+            effect: 'some-strange-value'
+        };
+
+        Rbac.evaluateRule(invalidRule, dataRetriever, (err, result) => {
+
+            expect(err).to.exist();
+
+            done();
+        });
+    });
 });

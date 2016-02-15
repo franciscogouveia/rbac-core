@@ -22,19 +22,19 @@ experiment('Policy set unit tests', () => {
     }, { override: true });
 
     const policySet = {
-        target: ['any-of', { type: 'group', value: 'writer' }, { type: 'group', value: 'publisher' }], // writer OR publisher
+        target: [{ 'credentials:group': 'writer' }, { 'credentials:group': 'publisher' }], // writer OR publisher
         apply: 'permit-overrides', // deny, unless one permits
         policies: [
             {
-                target: ['all-of', { type: 'group', value: 'writer' }, { type: 'premium', value: true }], // if writer AND premium account
+                target: [{ 'credentials:group': 'writer', 'credentials:premium': true }], // if writer AND premium account
                 apply: 'deny-overrides', // permit, unless one denies
                 rules: [
                     {
-                        target: ['any-of', { type: 'username', value: 'bad_user' }], // if the username is bad_user
+                        target: { 'credentials:username': 'bad_user' }, // if the username is bad_user (no need for array)
                         effect: 'deny'  // then deny
                     },
                     {
-                        target: ['any-of', { type: 'blocked', value: true }], // if the user is blocked
+                        target: { 'credentials:blocked': true }, // if the user is blocked (no need for array)
                         effect: 'deny'  // then deny
                     },
                     {
@@ -43,11 +43,11 @@ experiment('Policy set unit tests', () => {
                 ]
             },
             {
-                target: ['all-of', { type: 'premium', value: false }], // if (writer OR publisher) AND no premium account
+                target: { 'credentials:premium': false }, // if (writer OR publisher) AND no premium account
                 apply: 'permit-overrides', // deny, unless one permits
                 rules: [
                     {
-                        target: ['any-of', { type: 'username', value: 'special_user' }], // if the username is special_user
+                        target: { 'credentials:username': 'special_user' }, // if the username is special_user
                         effect: 'permit'  // then permit
                     },
                     {
@@ -186,6 +186,63 @@ experiment('Policy set unit tests', () => {
             expect(err).to.not.exist();
 
             expect(applies).to.exist().and.to.equal(Rbac.DENY);
+
+            done();
+        });
+    });
+
+    test('should have error on missing policy', (done) => {
+
+        const information = {
+            username: 'user00003',
+            group: ['publisher'],
+            premium: true,
+            blocked: false
+        };
+
+        Rbac.evaluatePolicy(null, dataRetriever.createChild(information), (err, applies) => {
+
+            expect(err).to.exist();
+
+            done();
+        });
+    });
+
+    test('should have error on missing data retriever', (done) => {
+
+        Rbac.evaluatePolicy(policySet, null, (err, applies) => {
+
+            expect(err).to.exist();
+
+            done();
+        });
+    });
+
+    test('should have error on invalid data retriever', (done) => {
+
+        Rbac.evaluatePolicy(policySet, 'test', (err, applies) => {
+
+            expect(err).to.exist();
+
+            done();
+        });
+    });
+
+    test('should have error on invalid combinatory algorithm', (done) => {
+
+        const invalidPolicySet = {
+            target: [{ 'credentials:group': 'writer' }, { 'credentials:group': 'publisher' }], // writer OR publisher
+            apply: 'some-strange-value',
+            rules: [
+                {
+                    effect: 'deny'
+                }
+            ]
+        };
+
+        Rbac.evaluatePolicy(invalidPolicySet, dataRetriever, (err, applies) => {
+
+            expect(err).to.exist();
 
             done();
         });

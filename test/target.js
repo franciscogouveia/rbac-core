@@ -13,9 +13,9 @@ const Rbac = require('../');
 const DataRetrievalRouter = require('../lib/DataRetrievalRouter');
 
 
-experiment('Target unit tests (all-of)', () => {
+experiment('Target unit tests (AND)', () => {
 
-    const target = ['all-of', { type: 'group', value: 'writer' }, { type: 'premium', value: true }];
+    const target = { 'credentials:group': 'writer', 'credentials:premium': true };
 
     // Register mocked data retriever
     const dataRetriever = new DataRetrievalRouter();
@@ -80,12 +80,13 @@ experiment('Target unit tests (all-of)', () => {
 
 });
 
-experiment('Target unit tests (any-of)', () => {
+experiment('Target unit tests (OR)', () => {
 
-    const target = ['any-of', { type: 'group', value: 'writer' }, { type: 'premium', value: true }, {
-        type: 'username',
-        value: 'user00002'
-    }];
+    const target = [
+        { 'credentials:group': 'writer' },
+        { 'credentials:premium': true },
+        { 'credentials:username': 'user00002' }
+    ];
 
     // Register mocked data retriever
     const dataRetriever = new DataRetrievalRouter();
@@ -148,4 +149,21 @@ experiment('Target unit tests (any-of)', () => {
         });
     });
 
+});
+
+experiment('Target unit tests', () => {
+
+    const dataRetriever = new DataRetrievalRouter();
+
+    test('should apply (partial match)', (done) => {
+
+        const invalidTarget = [];
+
+        Rbac.evaluateTarget(invalidTarget, dataRetriever, (err, applies) => {
+
+            expect(err).to.exist();
+
+            done();
+        });
+    });
 });

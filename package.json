@@ -1,6 +1,6 @@
 {
   "name": "rbac-core",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "RBAC core from hapi-rbac",
   "main": "lib/index.js",
   "directories": {

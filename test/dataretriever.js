@@ -156,4 +156,37 @@ experiment('RBAC internal modular information retrieval', () => {
         });
     });
 
+    test('should return err in callback when an error is thrown (sync)', (done) => {
+
+        const retriever = (source, key, context) => {
+
+            throw new Error('test');
+        };
+
+        dataRetriever.register('sync-test-err-1', retriever);
+
+        dataRetriever.get('sync-test-err-1:x', (err, result) => {
+
+            expect(err).to.exist();
+
+            done();
+        });
+    });
+
+    test('should return err in callback when an error is thrown (async)', (done) => {
+
+        const retriever = (source, key, context, callback) => {
+
+            throw new Error('test');
+        };
+
+        dataRetriever.register('async-test-err-1', retriever);
+
+        dataRetriever.get('async-test-err-1:x', (err, result) => {
+
+            expect(err).to.exist();
+
+            done();
+        });
+    });
 });

@@ -156,6 +156,56 @@ experiment('RBAC internal modular information retrieval', () => {
         });
     });
 
+    test('should use parent asynchronous retriever', (done) => {
+
+        const retriever = (source, key, context, callback) => {
+
+            callback(null, 'key-' + key);
+        };
+
+        dataRetriever.register('async-parent-test-1', retriever);
+
+        const childDataRetriever = dataRetriever.createChild();
+
+        childDataRetriever.get('async-parent-test-1:x', (err, result) => {
+
+            expect(err).to.not.exist();
+            expect(result).to.equal('key-x');
+            done();
+        });
+    });
+
+    test('should use parent synchronous retriever', (done) => {
+
+        const retriever = (source, key, context) => {
+
+            return 'key-' + key;
+        };
+
+        dataRetriever.register('sync-parent-test-1', retriever);
+
+        const childDataRetriever = dataRetriever.createChild();
+
+        childDataRetriever.get('sync-parent-test-1:x', (err, result) => {
+
+            expect(err).to.not.exist();
+            expect(result).to.equal('key-x');
+            done();
+        });
+    });
+
+    test('should return null if inexistent prefix on child and parent', (done) => {
+
+        const childDataRetriever = dataRetriever.createChild();
+
+        childDataRetriever.get('this-does-not-exist-1:x', (err, result) => {
+
+            expect(err).to.not.exist();
+            expect(result).to.not.exist();
+            done();
+        });
+    });
+
     test('should not allow using get with context and without callback', (done) => {
 
         expect(dataRetriever.get.bind(null, 'get-with-context-without-callback:x', {})).to.throw(Error);

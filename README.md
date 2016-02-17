@@ -9,9 +9,10 @@
 
 > This is inspired by the [XACML](https://en.wikipedia.org/wiki/XACML) policies.
 
-## Version 1.0.0
+## Versions
 
-See [Release Notes](https://github.com/franciscogouveia/rbac-core/issues/12).
+* `1.0.0` [Release Notes](https://github.com/franciscogouveia/rbac-core/issues/12)
+* `2.0.0` [Release Notes](https://github.com/franciscogouveia/rbac-core/issues/15)
 
 ## How to use it
 

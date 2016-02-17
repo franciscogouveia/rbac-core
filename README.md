@@ -141,7 +141,7 @@ Contexts are preserved per data retriever router.
 
 You can also get data from data retriever router
 
-```
+```js
 dataRetrieverRouter.get('credentials:username', (err, result) => {
     ...
 });
@@ -149,7 +149,7 @@ dataRetrieverRouter.get('credentials:username', (err, result) => {
 
 And you can override the context on get, by passing it in the second argument
 
-```
+```js
 dataRetrieverRouter.get('credentials:username', { username: 'the_overrider', group: ['anonymous'] }, (err, result) => {
     ...
 });

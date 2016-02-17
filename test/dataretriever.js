@@ -156,6 +156,18 @@ experiment('RBAC internal modular information retrieval', () => {
         });
     });
 
+    test('should not allow using get with context and without callback', (done) => {
+
+        expect(dataRetriever.get.bind(null, 'get-with-context-without-callback:x', {})).to.throw(Error);
+        done()
+    });
+
+    test('should not allow using get without context and without callback', (done) => {
+
+        expect(dataRetriever.get.bind(null, 'get-with-context-without-callback:x', {})).to.throw(Error);
+        done()
+    });
+
     test('should return err in callback when an error is thrown (sync)', (done) => {
 
         const retriever = (source, key, context) => {

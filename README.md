@@ -137,7 +137,23 @@ Changes to `dataRetrieverRouter` will influence `dataRetrieverRouter1` and `data
 
 Changes to any of `dataRetrieverRouter1` or `dataRetrieverRouter2` will not cause influence on any data retriever routers, but themselves.
 
-Contexts are preserver per data retriever router.
+Contexts are preserved per data retriever router.
+
+You can also get data from data retriever router
+
+```
+dataRetrieverRouter.get('credentials:username', (err, result) => {
+    ...
+});
+```
+
+And you can override the context on get, by passing it in the second argument
+
+```
+dataRetrieverRouter.get('credentials:username', { username: 'the_overrider', group: ['anonymous'] }, (err, result) => {
+    ...
+});
+```
 
 ## Learn more about _Rule Based Access Control_
 

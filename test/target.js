@@ -80,6 +80,91 @@ experiment('Target unit tests (AND)', () => {
 
 });
 
+experiment('Target unit tests (AND with RegExp)', () => {
+
+    const target = { 'credentials:group': /^articles\:(writer|reader)$/, 'credentials:premium': true };
+
+    // Register mocked data retriever
+    const dataRetriever = new DataRetrievalRouter();
+    dataRetriever.register('credentials', (source, key, context) => {
+
+        return context[key];
+    }, { override: true });
+
+    test('should apply (full match: articles:writer)', (done) => {
+
+        const information = {
+            username: 'user00001',
+            group: ['articles:writer'],
+            premium: true
+        };
+
+        Rbac.evaluateTarget(target, dataRetriever.createChild(information), (err, applies) => {
+
+            expect(err).to.not.exist();
+
+            expect(applies).to.exist().and.to.equal(true);
+
+            done();
+        });
+    });
+
+    test('should apply (full match: articles:reader)', (done) => {
+
+        const information = {
+            username: 'user00002',
+            group: ['articles:reader'],
+            premium: true
+        };
+
+        Rbac.evaluateTarget(target, dataRetriever.createChild(information), (err, applies) => {
+
+            expect(err).to.not.exist();
+
+            expect(applies).to.exist().and.to.equal(true);
+
+            done();
+        });
+    });
+
+    test('should not apply (partial match)', (done) => {
+
+        const information = {
+            username: 'user00003',
+            group: ['articles:other'],
+            premium: true
+        };
+
+        Rbac.evaluateTarget(target, dataRetriever.createChild(information), (err, applies) => {
+
+            expect(err).to.not.exist();
+
+            expect(applies).to.exist().and.to.equal(false);
+
+            done();
+        });
+    });
+
+    test('should not apply (no match)', (done) => {
+
+        const information = {
+            username: 'user00004',
+            group: ['articles:other'],
+            premium: false
+        };
+
+        Rbac.evaluateTarget(target, dataRetriever.createChild(information), (err, applies) => {
+
+            expect(err).to.not.exist();
+
+            expect(applies).to.exist().and.to.equal(false);
+
+            done();
+        });
+    });
+
+});
+
 experiment('Target unit tests (OR)', () => {
 
     const target = [

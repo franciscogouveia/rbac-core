@@ -13,6 +13,7 @@
 
 * `1.0.0` [Release Notes](https://github.com/franciscogouveia/rbac-core/issues/12)
 * `2.0.0` [Release Notes](https://github.com/franciscogouveia/rbac-core/issues/15)
+* `3.0.0` [Release Notes](https://github.com/franciscogouveia/rbac-core/issues/23)
 
 ## How to use it
 

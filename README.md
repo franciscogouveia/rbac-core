@@ -91,11 +91,11 @@ const context = {
 dataRetrieverRouter.setContext(context);
 
 const policy = {
-    target: [{ 'credentials:username': 'francisco' }, { 'credentials:group': 'admin' }], // if username is 'francisco' OR group is 'admin'
+    target: [{ 'credentials:username': 'francisco' }, { 'credentials:group': /^articles\:.*$/ }], // if username is 'francisco' OR group matches 'articles:*' (using native javascript RegExp)
     apply: 'deny-overrides', // permit, unless one denies
     rules: [
         {
-            target: { 'credentials:group': 'admin', 'credentials:validated': false }, // if group is 'admin' AND is not validated
+            target: { 'credentials:group': 'articles:admin', 'credentials:validated': false }, // if group is 'articles:admin' AND is not validated
             effect: 'deny'  // then deny (deny access to users that are not validated)
         },
         {

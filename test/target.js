@@ -165,6 +165,74 @@ experiment('Target unit tests (AND with RegExp)', () => {
 
 });
 
+
+experiment('Target unit tests (AND with field agains field matching)', () => {
+
+    const target = { 'credentials:group': 'writer', 'credentials:some-field': { field: 'external:some-field-name' } };
+
+    // Register mocked data retrievers
+    const dataRetriever = new DataRetrievalRouter();
+    dataRetriever.register('credentials', (source, key, context) => context[key], { override: true });
+
+    const externalContext = { 'some-field-name': 'some-field-value' };
+    dataRetriever.register('external', (source, key, context) => externalContext[key], { override: true });
+
+    test('should apply (full match)', (done) => {
+
+        const information = {
+            username: 'user00001',
+            group: ['writer'],
+            'some-field': 'some-field-value'
+        };
+
+        Rbac.evaluateTarget(target, dataRetriever.createChild(information), (err, applies) => {
+
+            expect(err).to.not.exist();
+
+            expect(applies).to.exist().and.to.equal(true);
+
+            done();
+        });
+    });
+
+    test('should not apply (partial match)', (done) => {
+
+        const information = {
+            username: 'user00002',
+            group: ['writer'],
+            'some-field': 'bad-field-value'
+        };
+
+        Rbac.evaluateTarget(target, dataRetriever.createChild(information), (err, applies) => {
+
+            expect(err).to.not.exist();
+
+            expect(applies).to.exist().and.to.equal(false);
+
+            done();
+        });
+    });
+
+    test('should not apply (no match)', (done) => {
+
+        const information = {
+            username: 'user00003',
+            group: ['reader'],
+            'some-field': 'bad-field-value'
+        };
+
+        Rbac.evaluateTarget(target, dataRetriever.createChild(information), (err, applies) => {
+
+            expect(err).to.not.exist();
+
+            expect(applies).to.exist().and.to.equal(false);
+
+            done();
+        });
+    });
+
+});
+
 experiment('Target unit tests (OR)', () => {
 
     const target = [

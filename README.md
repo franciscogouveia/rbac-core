@@ -46,7 +46,7 @@ const dataRetrieverRouter = new DataRetrievalRouter();
 dataRetrieverRouter.register('credentials', (source, key, context) => {
 
     // Obtain your value (e.g. from the context)
-    const value = context[key];
+    const value = context.user[key];
 
     return value;
 });
@@ -77,21 +77,32 @@ Evaluate your policies against a certain context
 const context = {
     user: {
         username: 'francisco',
-        group: ['admin', 'developer'],
-        validated: true
+        group: ['articles:admin', 'articles:developer'],
+        validated: true,
+        exampleField1: "test-value"
     },
     connection: {
         remoteip: '192.168.0.123',
         remoteport: 90,
         localip: '192.168.0.2'
-        localport: 80
+        localport: 80,
+        exampleField2: "test-value"
     }
 };
 
 dataRetrieverRouter.setContext(context);
 
 const policy = {
-    target: [{ 'credentials:username': 'francisco' }, { 'credentials:group': /^articles\:.*$/ }], // if username is 'francisco' OR group matches 'articles:*' (using native javascript RegExp)
+    target: [
+        // if username matches 'francisco' OR (exampleField1 matches exampleField2 AND user group matches 'articles:*')
+        { 'credentials:username': 'francisco' },
+        // OR
+        {
+            'credentials:exampleField1': { field: 'connection:exampleField2' }
+            // AND
+            'credentials:group': /^articles\:.*$/ //(using native javascript RegExp)
+        }
+    ],
     apply: 'deny-overrides', // permit, unless one denies
     rules: [
         {

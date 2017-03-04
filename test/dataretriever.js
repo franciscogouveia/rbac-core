@@ -95,12 +95,12 @@ experiment('RBAC internal modular information retrieval', () => {
             dataRetriever.get('test-override-multiple-3:test'),
             dataRetriever.get('test-override-multiple-4:test')
         ])
-        .then(([result1, result2, result3, result4]) => {
+        .then((results) => {
 
-            expect(result1).to.equal('test-1');
-            expect(result2).to.equal('test-2');
-            expect(result3).to.equal('test-1');
-            expect(result4).to.equal('test-2');
+            expect(results[0]).to.equal('test-1');
+            expect(results[1]).to.equal('test-2');
+            expect(results[2]).to.equal('test-1');
+            expect(results[3]).to.equal('test-2');
         });
     });
 
